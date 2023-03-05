@@ -1,7 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://xmlns.jcp.org/xml/ns/javaee"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
 	                    http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+
+  <!--  <login-config>-->
+  <!--    <auth-method>JWT</auth-method>-->
+  <!--  </login-config>-->
+
+  <!--  <security-role>-->
+  <!--    <role-name>student</role-name>-->
+  <!--  </security-role>-->
+
+  <!--  <security-role>-->
+  <!--    <role-name>teacher</role-name>-->
+  <!--  </security-role>-->
+
+  <!--  <security-constraint>-->
+  <!--    <web-resource-collection>-->
+  <!--      <web-resource-name>API REST</web-resource-name>-->
+  <!--      <url-pattern>/api/*</url-pattern>-->
+  <!--    </web-resource-collection>-->
+  <!--    <auth-constraint>-->
+  <!--      <role-name>student</role-name>-->
+  <!--      <role-name>teacher</role-name>-->
+  <!--    </auth-constraint>-->
+  <!--  </security-constraint>-->
 
 </web-app>
