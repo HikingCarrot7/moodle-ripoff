@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -31,7 +32,10 @@ public class Assignment {
   private LocalDateTime dueDate;
 
   @Column(name = "lock_after_due_date")
-  private boolean lockAfterDueDate;
+  private boolean lockAfterDueDate = false;
+
+  @Column
+  private boolean completed = false;
 
   @Column(name = "created_at")
   private LocalDateTime createdAt;
@@ -46,7 +50,7 @@ public class Assignment {
       orphanRemoval = true
   )
   @ToString.Exclude
-  private List<Submission> submissions;
+  private List<Submission> submissions = new ArrayList<>();
 
   @PrePersist
   public void prePersist() {

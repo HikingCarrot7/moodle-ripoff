@@ -8,6 +8,8 @@ import me.hikingcarrot7.moodleripoff.service.exception.EmailAlreadyTakenExceptio
 import me.hikingcarrot7.moodleripoff.service.exception.StudentNotFoundException;
 import me.hikingcarrot7.moodleripoff.util.PasswordEncoder;
 
+import static java.util.Objects.nonNull;
+
 @ApplicationScoped
 public class StudentService {
   @Inject private StudentRepository studentRepository;
@@ -18,11 +20,26 @@ public class StudentService {
         .orElseThrow(() -> new StudentNotFoundException(id));
   }
 
+  public Student getStudentByEmail(String email) {
+    return studentRepository.findStudentByEmail(email)
+        .orElseThrow(() -> new StudentNotFoundException(email));
+  }
+
   public Student createStudent(Student newStudent) {
     ensureUniqueEmail(newStudent.getEmail());
     String password = newStudent.getPassword();
     newStudent.setPassword(passwordEncoder.encode(password));
     return studentRepository.saveStudent(newStudent);
+  }
+
+  public Student updateStudent(Long studentId, Student student) {
+    Student studentToUpdate = getStudentById(studentId);
+    if (nonNull(student.getPassword())) {
+      String password = student.getPassword();
+      studentToUpdate.setPassword(passwordEncoder.encode(password));
+    }
+    studentToUpdate.setName(student.getName());
+    return studentRepository.saveStudent(studentToUpdate);
   }
 
   private void ensureUniqueEmail(String email) {

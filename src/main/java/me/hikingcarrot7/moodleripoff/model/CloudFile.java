@@ -21,6 +21,9 @@ public class CloudFile {
   @Column
   private String url;
 
+  @Column
+  private String originalFilename;
+
   public boolean isValidFile() {
     return nonNull(publicId) && nonNull(url);
   }

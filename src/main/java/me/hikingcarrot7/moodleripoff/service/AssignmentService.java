@@ -19,6 +19,10 @@ public class AssignmentService {
     return assignmentRepository.findAssignmentsByCourseId(courseId);
   }
 
+  public List<Assignment> getAssignmentsByStudentId(Long studentId) {
+    return assignmentRepository.findAssignmentsByStudentId(studentId);
+  }
+
   public Assignment getAssignmentById(Long assignmentId) {
     return assignmentRepository
         .findAssignmentById(assignmentId)

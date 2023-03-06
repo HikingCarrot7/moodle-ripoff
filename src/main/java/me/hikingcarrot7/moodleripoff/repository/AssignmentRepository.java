@@ -20,6 +20,18 @@ public class AssignmentRepository {
         .getResultList();
   }
 
+  public List<Assignment> findAssignmentsByStudentId(Long studentId) {
+    return em.createQuery("""
+            SELECT a FROM Assignment a
+            WHERE a.course.id IN (
+              SELECT e.course.id FROM Enrollment e
+              WHERE e.student.id = :studentId
+            )
+            """, Assignment.class)
+        .setParameter("studentId", studentId)
+        .getResultList();
+  }
+
   public Optional<Assignment> findAssignmentById(Long assignmentId) {
     return Optional.ofNullable(em.find(Assignment.class, assignmentId));
   }

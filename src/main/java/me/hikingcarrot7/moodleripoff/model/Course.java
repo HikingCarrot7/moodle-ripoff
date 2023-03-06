@@ -49,7 +49,7 @@ public class Course {
       orphanRemoval = true
   )
   @ToString.Exclude
-  private List<Assignment> assignments;
+  private List<Assignment> assignments = new ArrayList<>();
 
   public void enrollStudent(Student student) {
     Enrollment enrollment = new Enrollment(student, this);

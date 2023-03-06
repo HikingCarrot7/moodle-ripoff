@@ -1,19 +1,19 @@
 package me.hikingcarrot7.moodleripoff.web.dto.mapper;
 
 import me.hikingcarrot7.moodleripoff.model.Student;
-import me.hikingcarrot7.moodleripoff.web.dto.StudentDTO;
+import me.hikingcarrot7.moodleripoff.web.dto.student.StudentDTO;
+import me.hikingcarrot7.moodleripoff.web.dto.student.UpdateStudentRequestDTO;
+import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 
-import java.util.List;
-
-@Mapper(componentModel = "jakarta")
+@Mapper(componentModel = "jakarta", builder = @Builder(disableBuilder = true))
 public interface StudentMapper {
 
   Student toStudent(StudentDTO studentDTO);
 
-  StudentDTO toStudentDto(Student student);
+  Student toStudent(UpdateStudentRequestDTO updateStudentRequestDTO);
 
-  List<StudentDTO> toStudentDtoList(List<Student> students);
+  StudentDTO toStudentDto(Student student);
 
 }
 

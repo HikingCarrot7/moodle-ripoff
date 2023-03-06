@@ -6,4 +6,8 @@ public class StudentNotFoundException extends RuntimeException {
     super(String.format("Student with id %d not found", id));
   }
 
+  public StudentNotFoundException(String email) {
+    super(String.format("Student with email %s not found", email));
+  }
+
 }

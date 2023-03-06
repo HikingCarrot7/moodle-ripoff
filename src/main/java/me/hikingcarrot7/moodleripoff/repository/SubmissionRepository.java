@@ -17,6 +17,14 @@ public class SubmissionRepository {
     return Optional.ofNullable(em.find(Submission.class, id));
   }
 
+  public Optional<Submission> findSubmissionOfAssignmentByStudentId(Long assignmentId, Long studentId) {
+    return em.createQuery("SELECT s FROM Submission s WHERE s.assignment.id = :assignmentId AND s.student.id = :studentId", Submission.class)
+        .setParameter("assignmentId", assignmentId)
+        .setParameter("studentId", studentId)
+        .getResultStream()
+        .findFirst();
+  }
+
   public Submission saveSubmission(Submission submission) {
     em.persist(submission);
     em.flush();

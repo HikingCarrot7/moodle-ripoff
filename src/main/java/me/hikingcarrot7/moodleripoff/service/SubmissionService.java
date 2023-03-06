@@ -13,6 +13,7 @@ import me.hikingcarrot7.moodleripoff.service.exception.SubmissionNotFoundExcepti
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Optional;
 
 @ApplicationScoped
 public class SubmissionService {
@@ -27,6 +28,10 @@ public class SubmissionService {
         .orElseThrow(() -> new SubmissionNotFoundException(id));
   }
 
+  public Optional<Submission> getSubmissionOfAssignmentByStudentId(Long assignmentId, Long studentId) {
+    return submissionRepository.findSubmissionOfAssignmentByStudentId(assignmentId, studentId);
+  }
+
   @Transactional
   public Submission createSubmission(SubmissionSpec submissionSpec) {
     Submission newSubmission = submissionSpec.getSubmission();
@@ -36,26 +41,10 @@ public class SubmissionService {
     newSubmission.setStudent(student);
     newSubmission.setAssignment(assignment);
     newSubmission.setSubmittedAt(LocalDateTime.now(ZoneOffset.UTC));
-    if (submissionSpec.hasFile()) {
-      CloudFile file = fileUploaderService.uploadFile(submissionSpec.getFileBytes());
-      newSubmission.setFile(file);
-    }
+    CloudFile file = fileUploaderService.uploadFile(submissionSpec.getFile());
+    newSubmission.setFile(file);
 
     return submissionRepository.saveSubmission(newSubmission);
-  }
-
-  @Transactional
-  public Submission updateSubmission(Long submissionId, SubmissionSpec submissionSpec) {
-    Submission submissionToUpdate = getSubmissionById(submissionId);
-    Submission updatedSubmission = submissionSpec.getSubmission();
-
-    if (submissionSpec.hasFile()) {
-      CloudFile file = fileUploaderService.uploadOrUpdateFile(submissionToUpdate, submissionSpec.getFileBytes());
-      submissionToUpdate.setFile(file);
-    }
-    submissionToUpdate.setDescription(updatedSubmission.getDescription());
-
-    return submissionRepository.saveSubmission(submissionToUpdate);
   }
 
   @Transactional

@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "jakarta")
+@Mapper(componentModel = "jakarta", uses = CourseMapper.class)
 public interface AssignmentMapper {
 
   Assignment toAssignment(AssignmentDTO assignmentDTO);

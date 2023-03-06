@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,7 +22,7 @@ public class Teacher extends Person {
       cascade = CascadeType.ALL,
       orphanRemoval = true
   )
-  private List<Course> ownedCourses;
+  private List<Course> ownedCourses = new ArrayList<>();
 
   public void addCourse(Course course) {
     ownedCourses.add(course);

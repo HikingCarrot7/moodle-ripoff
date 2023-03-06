@@ -8,6 +8,8 @@ import me.hikingcarrot7.moodleripoff.service.exception.EmailAlreadyTakenExceptio
 import me.hikingcarrot7.moodleripoff.service.exception.TeacherNotFoundException;
 import me.hikingcarrot7.moodleripoff.util.PasswordEncoder;
 
+import static java.util.Objects.nonNull;
+
 @ApplicationScoped
 public class TeacherService {
   @Inject private TeacherRepository teacherRepository;
@@ -16,6 +18,11 @@ public class TeacherService {
   public Teacher getTeacherById(Long id) {
     return teacherRepository.getTeacherById(id)
         .orElseThrow(() -> new TeacherNotFoundException(id));
+  }
+
+  public Teacher getTeacherByEmail(String email) {
+    return teacherRepository.getTeacherByEmail(email)
+        .orElseThrow(() -> new TeacherNotFoundException(email));
   }
 
   public Teacher createTeacher(Teacher teacher) {
@@ -27,10 +34,10 @@ public class TeacherService {
 
   public Teacher updateTeacher(Long teacherId, Teacher teacher) {
     Teacher teacherToUpdate = getTeacherById(teacherId);
-    if (!teacherToUpdate.getEmail().equals(teacher.getEmail())) {
-      ensureUniqueEmail(teacher.getEmail());
+    if (nonNull(teacher.getPassword())) {
+      String password = teacher.getPassword();
+      teacherToUpdate.setPassword(passwordEncoder.encode(password));
     }
-    teacherToUpdate.setEmail(teacher.getEmail());
     teacherToUpdate.setName(teacher.getName());
     return teacherRepository.updateTeacher(teacherToUpdate);
   }

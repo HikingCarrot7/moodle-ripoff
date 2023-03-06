@@ -17,6 +17,13 @@ public class TeacherRepository {
     return Optional.ofNullable(em.find(Teacher.class, id));
   }
 
+  public Optional<Teacher> getTeacherByEmail(String email) {
+    return em.createQuery("SELECT t FROM Teacher t WHERE t.email = :email", Teacher.class)
+        .setParameter("email", email)
+        .getResultStream()
+        .findFirst();
+  }
+
   public Teacher saveTeacher(Teacher teacher) {
     em.persist(teacher);
     em.flush();

@@ -6,4 +6,8 @@ public class TeacherNotFoundException extends RuntimeException {
     super(String.format("Teacher with id %d not found", id));
   }
 
+  public TeacherNotFoundException(String email) {
+    super(String.format("Teacher with email %s not found", email));
+  }
+
 }

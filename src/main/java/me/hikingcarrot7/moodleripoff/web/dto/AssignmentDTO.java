@@ -25,6 +25,10 @@ public class AssignmentDTO {
 
   private boolean isLocked;
 
+  private boolean completed;
+
   @JsonbDateFormat("yyyy-MM-dd HH:mm:ss")
   private LocalDateTime createdAt;
+
+  private CourseDTO course;
 }

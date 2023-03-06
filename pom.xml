@@ -31,6 +31,7 @@
     <payara-embded-arq>3.0.alpha7</payara-embded-arq>
     <payara-embedded>6.2023.1</payara-embedded>
     <hibernate-core.version>6.1.7.Final</hibernate-core.version>
+    <nimbus-jose-jwt.version>9.31</nimbus-jose-jwt.version>
   </properties>
 
   <dependencies>
@@ -46,6 +47,13 @@
       <version>${microprofile.version}</version>
       <type>pom</type>
       <scope>provided</scope>
+    </dependency>
+
+    <!-- JWT -->
+    <dependency>
+      <groupId>com.nimbusds</groupId>
+      <artifactId>nimbus-jose-jwt</artifactId>
+      <version>${nimbus-jose-jwt.version}</version>
     </dependency>
 
     <!-- File storage provider -->

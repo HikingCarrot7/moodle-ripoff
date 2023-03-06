@@ -17,6 +17,13 @@ public class StudentRepository {
     return Optional.ofNullable(em.find(Student.class, id));
   }
 
+  public Optional<Student> findStudentByEmail(String email) {
+    return em.createQuery("SELECT s FROM Student s WHERE s.email = :email", Student.class)
+        .setParameter("email", email)
+        .getResultStream()
+        .findFirst();
+  }
+
   public Student saveStudent(Student newStudent) {
     em.persist(newStudent);
     em.flush();

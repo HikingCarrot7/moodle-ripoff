@@ -3,7 +3,7 @@ package me.hikingcarrot7.moodleripoff.service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import me.hikingcarrot7.moodleripoff.model.Course;
-import me.hikingcarrot7.moodleripoff.model.Student;
+import me.hikingcarrot7.moodleripoff.model.Enrollment;
 import me.hikingcarrot7.moodleripoff.model.Teacher;
 import me.hikingcarrot7.moodleripoff.repository.CourseRepository;
 import me.hikingcarrot7.moodleripoff.service.exception.CourseNotFoundException;
@@ -15,14 +15,26 @@ public class CourseService {
   @Inject private TeacherService teacherService;
   @Inject private CourseRepository courseRepository;
 
+  public List<Course> getAllCourses() {
+    return courseRepository.findAllCourses();
+  }
+
   public Course getCourseById(Long id) {
     return courseRepository
-        .getCourseById(id)
+        .findCourseById(id)
         .orElseThrow(() -> new CourseNotFoundException(id));
   }
 
-  public List<Student> getEnrolledStudents(Long courseId) {
-    return courseRepository.getEnrolledStudents(courseId);
+  public List<Course> getCoursesByStudentId(Long studentId) {
+    return courseRepository.findCoursesByStudentId(studentId);
+  }
+
+  public List<Course> getCoursesByTeacherId(Long teacherId) {
+    return courseRepository.findCoursesByTeacherId(teacherId);
+  }
+
+  public List<Enrollment> getEnrollments(Long courseId) {
+    return courseRepository.findEnrollments(courseId);
   }
 
   public Course addCourseToTeacher(Long teacherId, Course course) {

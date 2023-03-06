@@ -20,4 +20,12 @@ public class PasswordEncoder {
     }
   }
 
+  public boolean matches(String originalPassword, String hashedPassword) {
+    try {
+      return encode(originalPassword).equals(hashedPassword);
+    } catch (RuntimeException e) {
+      return false;
+    }
+  }
+
 }
