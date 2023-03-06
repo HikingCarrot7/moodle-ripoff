@@ -4,15 +4,44 @@ import { AssignmentList } from '@/components/assignments/AssignmentList';
 import { getEnrollmentsOfCourse } from '@/services/enrollment/enrollment.service';
 import { EnrollmentList } from '@/components/enrollments/EnrollmentList';
 import { Calendar } from '@/components/shared/Calendar';
-import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { Button } from 'primereact/button';
 
-const CoursePage = ({ course, assignments, enrollments }) => {
+const CoursePage = ({ courseId }) => {
+  const router = useRouter();
+  const [course, setCourse] = useState(null);
+  const [assignments, setAssignments] = useState(null);
+  const [enrollments, setEnrollments] = useState(null);
+
+  useEffect(() => {
+    getCourseById(courseId).then((course) => {
+      setCourse(course);
+      getAssignmentsOfCourse(courseId).then((assignments) => {
+        setAssignments(assignments);
+        getEnrollmentsOfCourse(courseId).then((enrollments) => {
+          setEnrollments(enrollments);
+        });
+      });
+    });
+  }, [courseId]);
+
+  const goToCreateAssignment = () => {
+    router.push(`/assignments/create?courseId=${course.id}`);
+  };
+
+  if (!course || !assignments || !enrollments) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div>
-      <h2>{course.name}</h2>
-      <p>{course.description}</p>
-      <div className="grid">
-        <div className="col-4">
+    <div className="-mt-3">
+      <h2 className="text-4xl">
+        Welcome to the <span className="text-primary">{course.name}</span>{' '}
+        course
+      </h2>
+      <div className="grid -mt-5">
+        <div className="col-5">
           <Calendar
             title="Upcoming activities for this course"
             assignments={assignments}
@@ -20,9 +49,13 @@ const CoursePage = ({ course, assignments, enrollments }) => {
           <EnrollmentList enrollments={enrollments} />
         </div>
         <div className="col">
-          <Link href={`/assignments/create?courseId=${course.id}`}>
-            Create assignment
-          </Link>
+          <div className="flex justify-content-end mb-3">
+            <Button
+              label="Create assignment"
+              severity="secondary"
+              onClick={goToCreateAssignment}
+            />
+          </div>
           <AssignmentList assignments={assignments} />
         </div>
       </div>
@@ -32,15 +65,9 @@ const CoursePage = ({ course, assignments, enrollments }) => {
 
 export async function getServerSideProps(context) {
   const { courseId } = context.params;
-  const course = await getCourseById(courseId);
-  const assignments = await getAssignmentsOfCourse(courseId);
-  const enrollments = await getEnrollmentsOfCourse(courseId);
-
   return {
     props: {
-      course,
-      assignments,
-      enrollments,
+      courseId,
     },
   };
 }

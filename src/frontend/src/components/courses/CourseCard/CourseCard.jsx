@@ -1,6 +1,7 @@
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { useRouter } from 'next/router';
+import { Badge } from 'primereact/badge';
 
 export const CourseCard = ({ course }) => {
   const router = useRouter();
@@ -10,20 +11,17 @@ export const CourseCard = ({ course }) => {
     router.push(`/courses/${course.id}`);
   };
 
-  const updateCourse = () => {
-    router.push(`/courses/update?courseId=${course.id}`);
-  };
-
   return (
     <div className="card flex justify-content-center">
       <Card
         title={name}
         header={<Header />}
-        footer={
-          <Footer onGoToCourse={goToCourse} onUpdateCourse={updateCourse} />
-        }
+        footer={<Footer onGoToCourse={goToCourse} />}
         className="md:w-25rem">
-        <p className="m-0">{description}</p>
+        <p className="m-0" style={{ minHeight: '120px' }}>
+          {description}
+        </p>
+        <Badge value={`Enrollments: ${course.enrollmentCount}`} />
       </Card>
     </div>
   );
@@ -38,11 +36,14 @@ const Header = () => {
   );
 };
 
-const Footer = ({ onGoToCourse, onUpdateCourse }) => {
+const Footer = ({ onGoToCourse }) => {
   return (
     <div className="flex flex-wrap justify-content-end gap-2">
-      <Button label="Go to course" onClick={onGoToCourse} />
-      <Button label="Update course" onClick={onUpdateCourse} />
+      <Button
+        label="Go to course"
+        icon="pi pi-arrow-right"
+        onClick={onGoToCourse}
+      />
     </div>
   );
 };
