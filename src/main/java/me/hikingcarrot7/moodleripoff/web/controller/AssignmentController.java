@@ -64,6 +64,7 @@ public class AssignmentController {
   }
 
   @POST
+  @RolesAllowed("teacher")
   public Response addAssignmentToCourse(
       @QueryParam("courseId") Long courseId,
       @Context UriInfo uriInfo,
@@ -90,6 +91,7 @@ public class AssignmentController {
 
   @PUT
   @Path("/{assignmentId:[0-9]+}")
+  @RolesAllowed("teacher")
   public Response updateAssignment(
       @PathParam("assignmentId") Long assignmentId,
       @Valid AssignmentDTO assignmentDto
@@ -103,6 +105,7 @@ public class AssignmentController {
 
   @DELETE
   @Path("/{assignmentId:[0-9]+}")
+  @RolesAllowed("teacher")
   public Response removeAssignmentFromCourse(@PathParam("assignmentId") Long assignmentId) {
     Assignment result = assignmentService.removeAssignmentFromCourse(assignmentId);
     return Response

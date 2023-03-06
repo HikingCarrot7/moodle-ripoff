@@ -2,11 +2,9 @@ import { TabPanel, TabView } from 'primereact/tabview';
 import { RegisterForm } from '@/components/auth/RegisterForm';
 import { useRouter } from 'next/router';
 import { registerStudent, registerTeacher } from '@/services/auth/auth.service';
-import { useRedirectToCourses } from '@/hooks/useRedirectToCourses';
 
 const RegisterPage = () => {
   const router = useRouter();
-  useRedirectToCourses();
 
   const onRegisterStudent = async (registerStudentRequest) => {
     await registerStudent(registerStudentRequest);

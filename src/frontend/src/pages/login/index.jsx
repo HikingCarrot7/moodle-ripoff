@@ -2,11 +2,9 @@ import { LoginForm } from '@/components/auth/LoginForm';
 import { TabPanel, TabView } from 'primereact/tabview';
 import { useRouter } from 'next/router';
 import { loginStudent, loginTeacher } from '@/services/auth/auth.service';
-import { useRedirectToCourses } from '@/hooks/useRedirectToCourses';
 
 const LoginPage = () => {
   const router = useRouter();
-  useRedirectToCourses();
 
   const onLoginStudent = async (studentLoginRequest) => {
     await loginStudent(studentLoginRequest);
