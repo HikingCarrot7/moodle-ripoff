@@ -2,6 +2,7 @@ package me.hikingcarrot7.moodleripoff.web.controller;
 
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
+import jakarta.json.JsonNumber;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
@@ -37,7 +38,7 @@ public class AssignmentController {
   @GET
   @Path("/student")
   public Response getAssignmentsOfLoggedStudent() {
-    Long studentId = Long.parseLong(principal.getClaim("id"));
+    Long studentId = getLoggedUserId();
     List<Assignment> result = assignmentService.getAssignmentsByStudentId(studentId);
     return Response
         .ok(assignmentMapper.toAssignmentDtoList(result))
@@ -76,6 +77,17 @@ public class AssignmentController {
         .build();
   }
 
+  @POST
+  @Path("/{assignmentId:[0-9]+}")
+  @RolesAllowed("student")
+  public Response toggleAssignmentAsCompleted(@PathParam("assignmentId") Long assignmentId) {
+    Long studentId = getLoggedUserId();
+    var result = assignmentService.toggleAssignmentAsCompleted(assignmentId, studentId);
+    return Response
+        .ok(result)
+        .build();
+  }
+
   @PUT
   @Path("/{assignmentId:[0-9]+}")
   public Response updateAssignment(
@@ -96,6 +108,10 @@ public class AssignmentController {
     return Response
         .ok(assignmentMapper.toAssignmentDto(result))
         .build();
+  }
+
+  private Long getLoggedUserId() {
+    return ((JsonNumber) principal.getClaim("id")).longValue();
   }
 
 }

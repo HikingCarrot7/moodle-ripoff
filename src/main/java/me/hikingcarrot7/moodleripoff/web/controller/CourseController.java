@@ -110,9 +110,7 @@ public class CourseController {
   @DELETE
   @Path("/{courseId:[0-9]+}")
   @RolesAllowed("teacher")
-  public Response removeCourseFromTeacher(
-      @PathParam("courseId") Long courseId
-  ) {
+  public Response removeCourseFromTeacher(@PathParam("courseId") Long courseId) {
     Long teacherId = getLoggedUserId();
     Course result = courseService.removeCourseFromTeacher(teacherId, courseId);
     return Response

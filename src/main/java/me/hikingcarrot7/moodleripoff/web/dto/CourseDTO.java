@@ -17,4 +17,6 @@ public class CourseDTO {
 
   @NotBlank(message = "Code cannot be blank")
   private String code;
+
+  private long enrollmentCount;
 }

@@ -43,6 +43,7 @@ public class SubmissionService {
     newSubmission.setSubmittedAt(LocalDateTime.now(ZoneOffset.UTC));
     CloudFile file = fileUploaderService.uploadFile(submissionSpec.getFile());
     newSubmission.setFile(file);
+    student.addCompletedAssignment(assignment);
 
     return submissionRepository.saveSubmission(newSubmission);
   }

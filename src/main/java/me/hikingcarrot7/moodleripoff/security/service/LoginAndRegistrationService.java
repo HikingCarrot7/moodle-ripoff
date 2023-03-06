@@ -57,6 +57,7 @@ public class LoginAndRegistrationService {
     String jwtAccessToken = jwtTokenGenerator.generateJWTString(securityUser);
     return TokenDTO.builder()
         .id(student.getId())
+        .name(student.getName())
         .email(student.getEmail())
         .accessToken(jwtAccessToken)
         .build();
@@ -71,6 +72,7 @@ public class LoginAndRegistrationService {
     String jwtAccessToken = jwtTokenGenerator.generateJWTString(securityUser);
     return TokenDTO.builder()
         .id(teacher.getId())
+        .name(teacher.getName())
         .email(teacher.getEmail())
         .accessToken(jwtAccessToken)
         .build();

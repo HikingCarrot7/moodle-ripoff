@@ -88,6 +88,10 @@ public class Course {
     assignment.setCourse(null);
   }
 
+  public long getEnrollmentCount() {
+    return enrollments.size();
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

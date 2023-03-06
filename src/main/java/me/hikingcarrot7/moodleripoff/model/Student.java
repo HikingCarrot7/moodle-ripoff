@@ -33,6 +33,24 @@ public class Student extends Person {
   @ToString.Exclude
   private List<Submission> submissions = new ArrayList<>();
 
+  @OneToMany(
+      fetch = FetchType.LAZY,
+      cascade = {CascadeType.PERSIST, CascadeType.MERGE}
+  )
+  private List<Assignment> completedAssignments = new ArrayList<>();
+
+  public boolean hasCompletedAssignment(Assignment assignment) {
+    return completedAssignments.contains(assignment);
+  }
+
+  public void addCompletedAssignment(Assignment assignment) {
+    completedAssignments.add(assignment);
+  }
+
+  public void removeCompletedAssignment(Assignment assignment) {
+    completedAssignments.remove(assignment);
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

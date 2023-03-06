@@ -33,12 +33,12 @@ public class Submission implements WithCloudFile {
   @Column(name = "submitted_at")
   private LocalDateTime submittedAt;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   @JoinColumn(name = "assignment_id", referencedColumnName = "assignment_id")
   @ToString.Exclude
   private Assignment assignment;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   @JoinColumn(name = "student_id", referencedColumnName = "student_id")
   @ToString.Exclude
   private Student student;
